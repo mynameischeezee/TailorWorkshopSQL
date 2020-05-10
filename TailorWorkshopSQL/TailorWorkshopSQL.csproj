@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessLayer\InputOutPutSettings.cs" />
     <Compile Include="DataAccessLayer\ReadTables.cs" />
     <Compile Include="DataAccessLayer\SqlComponent.cs" />
     <Compile Include="DeleteOperationForm.cs">

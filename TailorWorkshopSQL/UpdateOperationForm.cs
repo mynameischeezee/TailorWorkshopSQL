@@ -87,7 +87,37 @@ namespace TailorWorkshopSQL
 
         private async void btn_Add_Click(object sender, EventArgs e)
         {
-            SqlConnection connection = SqlComponent.ConnectToDataBase();
+            List<int> OptionalIDs = InputOutPutSettings.OptionalIDs(table);
+            try
+            {
+                if (OptionalIDs.Any())
+                {
+                    foreach (TextBox textBox in textBoxes)
+                    {
+                        if (IDs.Count > textBoxes.IndexOf(textBox))
+                        {
+                            if (OptionalIDs.Contains(textBoxes.IndexOf(textBox)))
+                            {
+
+                            }
+                            else
+                            {
+
+                                if (string.IsNullOrEmpty(textBox.Text) || string.IsNullOrWhiteSpace(textBox.Text))
+                                {
+                                    MessageBox.Show(textBox.Name);
+                                    throw new Exception("Empty Field");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                }
+                SqlConnection connection = SqlComponent.ConnectToDataBase();
             string dataFirst = "";
             string dataSecond = "";
             foreach (string element in IDs)
@@ -127,6 +157,11 @@ namespace TailorWorkshopSQL
             catch (Exception ex)
             {
                 MessageBox.Show("Невірно введені данні!", "Увага !", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            }
+            catch
+            {
+                MessageBox.Show("Не всі данні заповнені!", "Увага !", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
