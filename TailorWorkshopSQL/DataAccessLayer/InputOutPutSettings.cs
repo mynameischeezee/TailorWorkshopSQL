@@ -18,34 +18,27 @@ namespace TailorWorkshopSQL.DataAccessLayer
             CustomerIDs.Add(6);
             CustomerIDs.Add(7);
             CustomerIDs.Add(8);
-
             List<int> OrderIDs = new List<int>();
             OrderIDs.Add(3);
             OrderIDs.Add(4);
-
             List<int> ProductIDs = new List<int>();
             ProductIDs.Add(9);
-
             List<int> TailorIDs = new List<int>();
             TailorIDs.Add(8);
             TailorIDs.Add(10);
             TailorIDs.Add(11);
             TailorIDs.Add(13);
-
-
             List<int> FabricManufacturerIDs = new List<int>();
             FabricManufacturerIDs.Add(3);
             FabricManufacturerIDs.Add(4);
             FabricManufacturerIDs.Add(5);
             FabricManufacturerIDs.Add(6);
             FabricManufacturerIDs.Add(7);
-
             OptionalAttributes.Add("Customer", CustomerIDs);
             OptionalAttributes.Add("Orders", OrderIDs);
             OptionalAttributes.Add("Product", ProductIDs);
             OptionalAttributes.Add("Tailor", TailorIDs);
             OptionalAttributes.Add("FabricManufacturer", FabricManufacturerIDs);
-
         }
 
         public static List<int> OptionalIDs(string tablename)

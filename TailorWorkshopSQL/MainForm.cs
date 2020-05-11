@@ -24,10 +24,49 @@ namespace TailorWorkshopSQL
             }
             
         }
+        private async void AddFirst()
+        {
+            lstBox_Data.Items.Clear();
+            string data = "";
+            SqlConnection connection = SqlComponent.ConnectToDataBase();
+            SqlCommand command = new SqlCommand("", SqlComponent.ConnectToDataBase());
+            List<string> columns = new List<string>();
+            List<string> rows = new List<string>();
+            SqlDataAdapter sqlData = new SqlDataAdapter($"SELECT * FROM {cmbBox_Tables.SelectedItem.ToString()}", SqlComponent.ConnectToDataBase());
+            DataTable dataTableColumns = new DataTable();
+            DataTable dataTableRows = new DataTable();
+
+            sqlData.Fill(dataTableColumns);
+            sqlData.Fill(dataTableRows);
+            foreach (DataColumn column in dataTableColumns.Columns)
+            {
+                columns.Add(column.ToString());
+            }
+            foreach (DataRow row in dataTableRows.Rows)
+            {
+                rows.Add(row.ToString());
+            }
+            IDNAME = columns[0];
+            data = "";
+            SqlDataReader reader = null;
+            SqlCommand Data = new SqlCommand($"SELECT * FROM [{cmbBox_Tables.SelectedItem.ToString()}] WHERE {IDNAME}=@{IDNAME}", connection);
+                Data.Parameters.AddWithValue($"@{IDNAME}", "1");
+                connection.Open();
+                reader = await Data.ExecuteReaderAsync();
+                await reader.ReadAsync();
+                foreach (string column in columns)
+                {
+                    data += reader[column];
+                    data += "   ";
+                }
+                lstBox_Data.Items.Add(data);
+                data = "";
+                connection.Close();
+          }
         public async void UpdateAndRead()
         {
-            
             lstBox_Data.Items.Clear();
+            AddFirst();
             string data = "";
             SqlConnection connection = SqlComponent.ConnectToDataBase();
             SqlCommand command = new SqlCommand("", SqlComponent.ConnectToDataBase());
@@ -58,7 +97,7 @@ namespace TailorWorkshopSQL
                 data += "   ";
             }
             lstBox_Data.Items.Add(data);
-            lstBox_Data.Items.Add(" ");
+
             data = "";
             try
             {
@@ -95,7 +134,7 @@ namespace TailorWorkshopSQL
             UpdateAndRead();
             
         }
-
+        
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             try
